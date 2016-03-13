@@ -7,8 +7,8 @@ class Title extends React.Component {
 
   render() {
     return (
-      <div className="greeting">
-        <h2>{this.props.title}</h2>
+      <div className="title">
+        <h1>{this.props.title}</h1>
       </div>
     );
   }
