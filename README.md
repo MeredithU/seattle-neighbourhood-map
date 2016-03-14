@@ -5,6 +5,7 @@
 1. [React](http://facebook.github.io/react/)
 2. [Webpack](https://webpack.github.io/docs/)
 3. [Babel](https://babeljs.io/)
+4. [React-Leaflet](https://github.com/PaulLeCam/react-leaflet)
 
 ### Testing: 
 

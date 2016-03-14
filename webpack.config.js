@@ -25,13 +25,12 @@ module.exports = {
         exclude: /node_modules/,
         include: __dirname + '/src',
         loaders: ['react-hot', 'babel-loader?presets[]=react,presets[]=es2015']
-      }/*,
+      },
       {
-        test: /\.js?$/,
-        exclude: /node_modules/,
-        include: __dirname + '/test',
-        loaders: ['react-hot', 'babel-loader?presets[]=react,presets[]=es2015']
-      }*/
+        test: /\.scss$/,
+        include: /src/,
+        loaders: ['style', 'css', 'sass']
+      }
 		],
 	}
 };
