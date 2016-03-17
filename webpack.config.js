@@ -30,6 +30,10 @@ module.exports = {
         test: /\.scss$/,
         include: /src/,
         loaders: ['style', 'css', 'sass']
+      },
+      {
+        test: /\.json$/,
+        loaders: ['json']
       }
 		],
 	}

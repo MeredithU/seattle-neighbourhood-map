@@ -1,2 +1,3 @@
 node_modules
 app
+src/environment-variables.js

@@ -5,16 +5,15 @@ import './SeattleMap.scss';
 
 class SeattleMap extends React.Component {
   render() {
-    const position = [47.6204, -122.3491];
     return (
-      <Map center={position} zoom={14}>
+      <Map center={this.props.position} zoom={this.props.zoom}>
         <TileLayer
           url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         />
-        <Marker position={position}>
+        <Marker position={this.props.position}>
           <Popup>
-            <span>Popup</span>
+            <span>Space Needle<br/>Seattle WA</span>
           </Popup>
         </Marker>
       </Map>

@@ -13,6 +13,10 @@
 2. [jsdom](https://github.com/tmpvar/jsdom)
 3. [mocha-jsdom](https://github.com/rstacruz/mocha-jsdom)
 
+## Connecting Mapbox Credentials
+
+You will need to create an _environment-variables.js_ file and include your *Access Token* and *Map ID* from your Mapbox account to display the map. Once you've created that file, it's pulled into the *App.jsx* file found in the */src* folder.
+
 ## Installation Instructions
 
 1. ``git clone https://github.com/MeredithU/seattle-neighbourhood-map.git``
