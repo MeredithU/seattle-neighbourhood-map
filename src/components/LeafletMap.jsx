@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Map, Marker, Popup, TileLayer } from 'react-leaflet';
-import './SeattleMap.scss';
+import './Map.scss';
 
-class SeattleMap extends React.Component {
+class LeafletMap extends React.Component {
   render() {
     return (
       <Map center={this.props.position} zoom={this.props.zoom}>
@@ -21,4 +21,9 @@ class SeattleMap extends React.Component {
   }
 };
 
-export default SeattleMap;
+LeafletMap.propTypes = {
+  position: React.PropTypes.array.isRequired,
+  zoom: React.PropTypes.number.isRequired
+};
+
+export default LeafletMap;

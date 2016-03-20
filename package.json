@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "webpack --display-error-details",
     "start": "webpack-dev-server --hot --inline --progress --colors",
     "test": "mocha --compilers js:babel-core/register -R nyan"
   },
@@ -27,6 +28,7 @@
     "css-loader": "^0.23.1",
     "dotenv": "^2.0.0",
     "file-loader": "^0.8.5",
+    "jquery": "^2.2.2",
     "jsdom": "^8.1.0",
     "json-loader": "^0.5.4",
     "leaflet": "^0.7.7",
