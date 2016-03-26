@@ -7,14 +7,6 @@ import './Map.scss';
 
 class MapboxMap extends React.Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      mapData: [],
-      map: {}
-    };
-  }
-
   componentWillMount() {
     console.log("componentWillMount")
   }
@@ -37,12 +29,17 @@ class MapboxMap extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log("componentWillMount")
+    console.log("componentWillReceiveProps")
     console.log(nextProps)
   }
 
   componentWillUpdate(nextProps, nextState) {
     console.log("componentWillUpdate")
+    console.log("nextProps:")
+    console.log(nextProps)
+    console.log("nextState:")
+    console.log(nextState)
+
 
     L.mapbox.accessToken = this.props.accessToken;
 
@@ -75,7 +72,7 @@ class MapboxMap extends React.Component {
       map: L.mapbox.map('map', this.props.mapId)
         .setView([latitude, longitude], this.props.zoom)
         .featureLayer.setGeoJSON(markers)
-    })
+    });
   }
 
   shouldComponentUpdate() {
@@ -84,6 +81,7 @@ class MapboxMap extends React.Component {
   }
 
   render() {
+    console.log("Render")
     return (
       <div id='map' className='mapbox'></div>
     )

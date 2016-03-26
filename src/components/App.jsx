@@ -6,11 +6,20 @@ import LeafletMap from './LeafletMap.jsx';
 import MapboxMap from './MapboxMap.jsx';
 
 class App extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      mapData: [],
+      map: {}
+    };
+  }
+
   render() {
     return (
       <div>
         <Title title='Mapbox Map' />
-        <MapboxMap accessToken={EnvironmentVariables.MAPBOX_ACCESS_TOKEN} mapId={EnvironmentVariables.MAPBOX_MAP_ID} center={[47.6204, -122.3491]} zoom={13} />
+        <MapboxMap accessToken={EnvironmentVariables.MAPBOX_ACCESS_TOKEN} mapId={EnvironmentVariables.MAPBOX_MAP_ID} center={[47.6204, -122.3491]} zoom={13} markers={this.state.mapData} />
       </div>
     );
   }
