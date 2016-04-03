@@ -2,9 +2,6 @@ import React from 'react';
 import './Title.scss';
 
 class Title extends React.Component {
-  constructor(props) {
-    super(props);
-  }
 
   render() {
     return (
@@ -13,6 +10,7 @@ class Title extends React.Component {
       </div>
     );
   }
+  
 };
 
 Title.propTypes = {

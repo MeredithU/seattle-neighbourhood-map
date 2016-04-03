@@ -28,7 +28,7 @@ class MapboxMap extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     // Retrieve the geojson data and create markers to be displayed on the map
-    let geojson = nextProps.mapData.cityFeatures;
+    let geojson = nextProps.mapData.mapPoints;
     let markers = [];
 
     _.map(geojson, function(mapPoint) {

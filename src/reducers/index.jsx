@@ -1,9 +1,12 @@
 import { combineReducers } from 'redux';
 import { REQUEST_DATA, RECEIVE_DATA, INVALIDATE_DATA } from '../actions/index.jsx';
 
+import _ from 'lodash';
+
 const initialState = {
   isFetching: false,
-  cityFeatures: []
+  mapPoints: [],
+  cityFeaturesList: []
 }
 
 function mapData(state = initialState, action) {
@@ -15,11 +18,27 @@ function mapData(state = initialState, action) {
     case 'RECEIVE_DATA':
       return Object.assign({}, state, {
         isFetching: false,
-        cityFeatures: action.mapData
+        mapPoints: action.mapData,
+        cityFeaturesList: findUniqueCityFeatures(action.mapData)
       });
   }
 
   return state;
+}
+
+function findUniqueCityFeatures(allMapData) {
+  let cityFeaturesArr = [],
+      cityFeaturesFilterList = [];
+
+  _.map(allMapData, function(mapPoint) {
+    cityFeaturesArr.push(
+      mapPoint['city_feature']
+    )
+  });
+
+  cityFeaturesFilterList = _.uniq(cityFeaturesArr).sort();
+
+  return cityFeaturesFilterList;
 }
 
 const rootReducer = combineReducers({
