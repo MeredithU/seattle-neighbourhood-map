@@ -1,11 +1,14 @@
 # Seattle Neighbourhood Map
 
+#### Populate Seattle neighbourhood data onto a map. Dataset can be found [here](https://data.seattle.gov/Community/My-Neighborhood-Map/82su-5fxf). 
+
 ## Included
 
 1. [React](http://facebook.github.io/react/)
-2. [Webpack](https://webpack.github.io/docs/)
-3. [Babel](https://babeljs.io/)
-4. [Mapbox](https://www.mapbox.com/mapbox.js/api/v2.3.0/)
+2. [Redux](https://github.com/reactjs/redux)
+3. [Webpack](https://webpack.github.io/docs/)
+4. [Babel](https://babeljs.io/)
+5. [Mapbox](https://www.mapbox.com/mapbox.js/api/v2.3.0/)
 
 ### Testing:
 

@@ -1,52 +1,34 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { connect } from 'react-redux';
+import { fetchData } from '../actions/index.jsx';
+
 import L from 'mapbox.js';
-import $ from 'jquery';
 import _ from 'lodash';
+
 import './Map.scss';
 
 class MapboxMap extends React.Component {
 
   componentWillMount() {
-    console.log("componentWillMount")
+    // Using Redux, fetch the data from the Socrata API and set it to the global state
+    this.props.dispatch(fetchData(this.props.domainName, this.props.datasetId));
   }
 
   componentDidMount() {
-    const DOMAIN_NAME = 'data.seattle.gov';
-    const DATASET_ID = '3c4b-gdxv';
-    let apiUrl = `https://${DOMAIN_NAME}/resource/${DATASET_ID}.json`;
-
-    $.ajax({
-      url: apiUrl,
-      dataType: 'json',
-      cache: false,
-      success: function(data) {
-        this.setState({
-          mapData: data
-        })
-      }.bind(this)
-    });
-  }
-
-  componentWillReceiveProps(nextProps) {
-    console.log("componentWillReceiveProps")
-    console.log(nextProps)
-  }
-
-  componentWillUpdate(nextProps, nextState) {
-    console.log("componentWillUpdate")
-    console.log("nextProps:")
-    console.log(nextProps)
-    console.log("nextState:")
-    console.log(nextState)
-
-
+    // Render the map onto the page
     L.mapbox.accessToken = this.props.accessToken;
 
     let latitude = this.props.center[0];
     let longitude = this.props.center[1];
-    
-    let geojson = nextState.mapData;
+
+    this.map = L.mapbox.map('map', this.props.mapId)
+        .setView([latitude, longitude], this.props.zoom)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    // Retrieve the geojson data and create markers to be displayed on the map
+    let geojson = nextProps.mapData.cityFeatures;
     let markers = [];
 
     _.map(geojson, function(mapPoint) {
@@ -65,28 +47,29 @@ class MapboxMap extends React.Component {
             'marker-symbol': 'commercial'
         }
       })
-
-    }); 
-
-    this.setState({
-      map: L.mapbox.map('map', this.props.mapId)
-        .setView([latitude, longitude], this.props.zoom)
-        .featureLayer.setGeoJSON(markers)
     });
+
+    this.map.featureLayer.setGeoJSON(markers)
   }
 
   shouldComponentUpdate() {
-    return true;
-    //return false;
+    return false;
   }
 
   render() {
-    console.log("Render")
     return (
-      <div id='map' className='mapbox'></div>
+      <div>
+        <div id='map' className='mapbox'></div>
+      </div>  
     )
   }
 };
+
+function mapStateToProps(state) {
+  return {
+    mapData: state.mapData
+  };
+}
 
 MapboxMap.propTypes = {
   accessToken: React.PropTypes.string.isRequired,
@@ -95,4 +78,4 @@ MapboxMap.propTypes = {
   zoom: React.PropTypes.number.isRequired
 };
 
-export default MapboxMap;
+export default connect(mapStateToProps)(MapboxMap);
