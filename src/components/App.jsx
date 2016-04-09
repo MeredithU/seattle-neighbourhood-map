@@ -13,7 +13,7 @@ class App extends React.Component {
     return (
       <div>
         <Title title='Seattle City Features' />
-        <MapboxMap domainName='data.seattle.gov' datasetId='3c4b-gdxv' accessToken={EnvironmentVariables.MAPBOX_ACCESS_TOKEN} mapId={EnvironmentVariables.MAPBOX_MAP_ID} center={[47.6204, -122.3491]} zoom={13} />
+        <MapboxMap domainName='data.seattle.gov' datasetId='3c4b-gdxv' accessToken={EnvironmentVariables.MAPBOX_ACCESS_TOKEN} mapId={EnvironmentVariables.MAPBOX_MAP_ID} center={[47.6204, -122.3491]} zoom={12} />
         <FilterList />
       </div>
     );

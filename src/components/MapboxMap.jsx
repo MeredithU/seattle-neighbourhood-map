@@ -52,9 +52,11 @@ class MapboxMap extends React.Component {
     });
 
     // Cluster data points and add layer onto map
-    let clusterGroup = new L.MarkerClusterGroup();
+    let clusterGroup = new L.MarkerClusterGroup({
+      showCoverageOnHover: false
+    });
     let markerLayer = L.mapbox.featureLayer().setGeoJSON(markers);
-    
+
     clusterGroup.addLayer(markerLayer); 
     this.map.addLayer(clusterGroup);
   }
