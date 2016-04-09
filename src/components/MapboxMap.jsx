@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { fetchData } from '../actions/index.jsx';
 
 import L from 'mapbox.js';
+import MarkerClusterGroup from 'leaflet.markercluster';
 import _ from 'lodash';
 
 import './Map.scss';
@@ -23,7 +24,7 @@ class MapboxMap extends React.Component {
     let longitude = this.props.center[1];
 
     this.map = L.mapbox.map('map', this.props.mapId)
-        .setView([latitude, longitude], this.props.zoom)
+        .setView([latitude, longitude], this.props.zoom);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -32,6 +33,7 @@ class MapboxMap extends React.Component {
     let markers = [];
 
     _.map(geojson, function(mapPoint) {
+      var marker = 
       markers.push({
         type: 'Feature',
         geometry: {
@@ -49,7 +51,12 @@ class MapboxMap extends React.Component {
       })
     });
 
-    this.map.featureLayer.setGeoJSON(markers)
+    // Cluster data points and add layer onto map
+    let clusterGroup = new L.MarkerClusterGroup();
+    let markerLayer = L.mapbox.featureLayer().setGeoJSON(markers);
+    
+    clusterGroup.addLayer(markerLayer); 
+    this.map.addLayer(clusterGroup);
   }
 
   shouldComponentUpdate() {
