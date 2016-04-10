@@ -32,8 +32,14 @@ class MapboxMap extends React.Component {
     let geojson = nextProps.mapData.mapPoints;
     let markers = [];
 
+    // Cluster data points and add layer onto map
+    let clusterGroup = new L.MarkerClusterGroup({
+      showCoverageOnHover: false
+    });
+
+    //let customTooltipLayer = L.mapbox.featureLayer().addTo();
+
     _.map(geojson, function(mapPoint) {
-      var marker = 
       markers.push({
         type: 'Feature',
         geometry: {
@@ -51,13 +57,15 @@ class MapboxMap extends React.Component {
       })
     });
 
-    // Cluster data points and add layer onto map
-    let clusterGroup = new L.MarkerClusterGroup({
-      showCoverageOnHover: false
+    let geoJsonLayer = L.geoJson(markers, {
+      onEachFeature: function (feature, layer) {
+        layer.bindPopup('<p class="marker-title">' + feature.properties.landmark + '</p>' + 
+                           '<p class="marker-description"><strong>Name: </strong>' + feature.properties.title + '</p>' + 
+                           '<p class="marker-description"><strong>Address: </strong>' + feature.properties.description + '</p>');
+      }
     });
-    let markerLayer = L.mapbox.featureLayer().setGeoJSON(markers);
 
-    clusterGroup.addLayer(markerLayer); 
+    clusterGroup.addLayer(geoJsonLayer);
     this.map.addLayer(clusterGroup);
   }
 
