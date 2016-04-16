@@ -1,15 +1,15 @@
 import { combineReducers } from 'redux';
-import { REQUEST_DATA, RECEIVE_DATA, INVALIDATE_DATA } from '../actions/index.jsx';
+import { REQUEST_DATA, RECEIVE_DATA, INVALIDATE_DATA, SET_CATEGORY_FILTER } from '../actions/index.jsx';
 
 import _ from 'lodash';
 
-const initialState = {
+const mapInitialState = {
   isFetching: false,
-  mapPoints: [],
+  allData: [],
   cityFeaturesList: []
 }
 
-function mapData(state = initialState, action) {
+const allDataPoints = (state = mapInitialState, action) => {
   switch (action.type) {
     case 'REQUEST_DATA':
       return Object.assign({}, state, {
@@ -18,21 +18,26 @@ function mapData(state = initialState, action) {
     case 'RECEIVE_DATA':
       return Object.assign({}, state, {
         isFetching: false,
-        mapPoints: action.mapData,
-        cityFeaturesList: findUniqueCityFeatures(action.mapData)
+        allData: action.allDataPoints.map((dataPoint, index) => {
+          return {
+            dataPoint: dataPoint,
+            dataPoint_id: index
+          }
+        }),
+        cityFeaturesList: findUniqueCityFeatures(action.allDataPoints)
       });
   }
 
   return state;
 }
 
-function findUniqueCityFeatures(allMapData) {
+const findUniqueCityFeatures = (allDataPoints) => {
   let cityFeaturesArr = [],
       cityFeaturesFilterList = [];
 
-  _.map(allMapData, function(mapPoint) {
+  _.map(allDataPoints, function(dataPoint) {
     cityFeaturesArr.push(
-      mapPoint['city_feature']
+      dataPoint['city_feature']
     )
   });
 
@@ -41,8 +46,19 @@ function findUniqueCityFeatures(allMapData) {
   return cityFeaturesFilterList;
 }
 
+
+const categoryFilter = (state = 'ALL', action) => {
+  switch (action.type) {
+    case 'SET_CATEGORY_FILTER':      
+      return action.filter
+    default:
+      return state 
+  }
+}
+
 const rootReducer = combineReducers({
-  mapData
+  allDataPoints,
+  categoryFilter
 });
 
 export default rootReducer;

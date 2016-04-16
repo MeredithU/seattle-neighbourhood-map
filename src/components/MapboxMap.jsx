@@ -28,16 +28,23 @@ class MapboxMap extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    // Retrieve the geojson data and create markers to be displayed on the map
-    let geojson = nextProps.mapData.mapPoints;
-    let markers = [];
+    console.log(nextProps.categoryFilter);
+
+    let currentFilter = nextProps.categoryFilter,
+        geojson,
+        markers = [];
 
     // Cluster data points and add layer onto map
     let clusterGroup = new L.MarkerClusterGroup({
       showCoverageOnHover: false
     });
 
-    //let customTooltipLayer = L.mapbox.featureLayer().addTo();
+    // Retrieve the geojson data based on chosen category filter and create markers to be displayed on the map
+    if (currentFilter === 'ALL') {
+      geojson = nextProps.allDataPoints.mapPoints;
+    } else {
+      // TO DO : set geojson variable to filtered mapPoints 
+    }
 
     _.map(geojson, function(mapPoint) {
       markers.push({
@@ -84,7 +91,8 @@ class MapboxMap extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    mapData: state.mapData
+    allDataPoints: state.allDataPoints,
+    categoryFilter: state.categoryFilter
   };
 }
 

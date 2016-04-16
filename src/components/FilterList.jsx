@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
+import { setCategoryFilter } from '../actions/index.jsx';
 
 import _ from 'lodash';
 
@@ -11,11 +12,21 @@ class FilterList extends React.Component {
   render() {
     return (
       <div>
-        <ul>
-          {this.props.mapData.cityFeaturesList.map((landmark, i) => 
-            <li key={i}>{landmark}</li>
-          )}
-        </ul>
+        <label>
+          <input filter='ALL' type='checkbox' value='All' className='cityFeatureCheckbox' />
+            All
+        </label>
+        {this.props.allDataPoints.cityFeaturesList.map((landmark, i) => 
+          <label key={i}>
+            <input key={i} 
+                   filter={landmark} 
+                   type='checkbox' 
+                   value={landmark} 
+                   className='cityFeatureCheckbox'
+            />
+            {landmark}
+          </label>
+        )}
       </div>
     )
   }
@@ -24,9 +35,22 @@ class FilterList extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    mapData: state.mapData,
-    cityFeaturesList: state.mapData
+    allDataPoints: state.allDataPoints,
+    cityFeaturesList: state.allDataPoints,
+    categoryFilter: state.categoryFilter
   };
 }
 
-export default connect(mapStateToProps)(FilterList);
+function mapDispatchToProps(dispatch, ownProps) {
+  return {
+    onClick: () => {
+      dispatch(setCategoryFilter(ownProps.filter))
+    }
+  }
+}
+
+
+export default connect(
+  mapStateToProps, 
+  mapDispatchToProps
+)(FilterList);
